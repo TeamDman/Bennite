@@ -1,14 +1,32 @@
 package ca.teamdman.bennite;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.block.Material;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class Bennite implements ModInitializer {
+	public static final BenniteBlock BENNITE_BLOCK      = new BenniteBlock(
+			FabricBlockSettings.of(Material.TNT)
+					.breakByHand(true)
+					.hardness(1)
+					.build()
+	);
+	public static final String       MODID              = "bennite";
+	public static final ItemGroup    BENNITE_GROUP      = FabricItemGroupBuilder.build(
+			new Identifier(MODID, MODID),
+			() -> new ItemStack(Bennite.BENNITE_BLOCK_ITEM));
+	public static final BlockItem    BENNITE_BLOCK_ITEM = new BlockItem(BENNITE_BLOCK, new Item.Settings().group(BENNITE_GROUP));
+
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
-		System.out.println("Hello Fabric world!");
+		Registry.register(Registry.BLOCK, new Identifier(MODID, "bennite"), BENNITE_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier(MODID, "bennite"), BENNITE_BLOCK_ITEM);
 	}
 }
